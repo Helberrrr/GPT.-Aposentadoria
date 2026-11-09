@@ -50,9 +50,22 @@ cliente → vitrineautonoma.com.br → Cloudflare → túnel "automaton" → PC 
 | `tunel.log`: "tunnel credentials file not found" | Falta o `<id>.json` | Passo 3 |
 | `servico.log`: "loja parou (código 1)" em loop | Um dos itens acima | Rodar `node scripts\publico.js vitrineautonoma.com.br` direto e ler a mensagem |
 
+## Operação 24/7 (regra do dono: se travar, fechar tudo e reabrir)
+
+O `servico.js` já aplica a regra: a cada 5 minutos confere `https://vitrineautonoma.com.br/saude`; depois de **3 falhas seguidas** ele fecha a loja e o túnel e abre tudo de novo (espera crescente entre tentativas: 5 s, 10 s, 20 s… até 5 min; passando de 20 reinícios na hora, 15 min).
+
+**Defeito encontrado (08/11/2026):** no Windows, o reinício usava `child.kill()`, que encerra só o processo principal. A loja e o túnel antigos podiam ficar pendurados, a porta 3000 continuava ocupada e a nova tentativa falhava em loop.
+**Correção (atualização 28):** `killTree()` usa `taskkill /PID <pid> /T /F`, que fecha o processo e todos os filhos (loja + túnel) antes de reabrir. Também vale para o encerramento do serviço e para o reinício depois de uma atualização.
+
+**Estado em 08/11/2026 22:35:** o pacote `automaton-sessao28.bundle` já está na pasta do projeto no PC, mas **ainda não foi aplicado**: o sistema de segurança bloqueou a troca remota do código e ela não foi forçada. Para aplicar:
+- pelo painel da loja: botão **Aplicar atualização** (a senha do painel fica no arquivo `SENHA-PAINEL.txt` do PC), ou
+- pelo PowerShell, na pasta `app`: `git pull --ff-only ..\automaton-sessao28.bundle main`, depois `npm.cmd test`; se passar, reiniciar o serviço. Para voltar atrás: `git reset --hard 1d1a6c5` (versão anterior à 27) ou o hash guardado em `data\update27-antes.txt`.
+
+**Início automático ao ligar o PC:** `npm.cmd run instalar-servico` (na pasta `app`) cria a tarefa do Windows `VitrineAutonoma`, que abre a loja ao entrar no sistema (sem senha salva). Ainda **não foi executado**. Limite: se o PC desligar, entrar em repouso ou ficar sem internet, a loja sai do ar até ele voltar. Para não suspender: Configurações → Sistema → Energia → "Suspender" = Nunca (na tomada); essa mudança é do dono do PC.
+
 ## Limitações conhecidas
 
-- **O PC precisa ficar ligado e sem repouso.** O serviço **não** sobe sozinho depois de reiniciar o Windows (não há tarefa de inicialização automática configurada). Pendente: criar uma tarefa agendada "ao iniciar sessão" para `servico.js`.
+- **O PC precisa ficar ligado e sem repouso.** Enquanto `instalar-servico` não for executado, o serviço **não** sobe sozinho depois de reiniciar o Windows.
 - Modo de operação real (Stripe em modo real). Alterações no código só entram pelo botão **"Aplicar atualização"** do painel (pull somente-avanço, testes e volta automática em caso de falha), nunca de forma remota automática.
 
 ## Produtos da Vitrine
@@ -60,7 +73,7 @@ cliente → vitrineautonoma.com.br → Cloudflare → túnel "automaton" → PC 
 | Produto | Preço | Entrega | Situação |
 |---|---|---|---|
 | Pacote de conteúdo (produto padrão) | a partir de R$ 49 (pacote inicial; o preço do pacote completo é definido pelo experimento ativo) | Gerado por IA e validado, em até 48 h | No ar |
-| **HN Replay — código-fonte do site** | R$ 1.490 | **Automática**: o `.zip` do código aparece no link do pedido logo após o pagamento. Sem IA e sem custo | Código pronto e testado (atualização 27). Entra no ar ao aplicar a atualização no painel |
+| **HN Replay — código-fonte do site** | R$ 1.490 | **Automática**: o `.zip` do código aparece no link do pedido logo após o pagamento. Sem IA e sem custo | **No ar desde 08/11/2026** (atualização 27 aplicada; 85 testes passaram no PC). Página: `/p/hn-replay` |
 | Canção da Família | R$ 39 | Letra por IA + música | Pronta no código; só publica com a chave do gerador de música, que ainda não existe |
 
 ### Como funciona o produto HN Replay na loja
@@ -76,3 +89,14 @@ cliente → vitrineautonoma.com.br → Cloudflare → túnel "automaton" → PC 
 
 1. O código novo chega como pacote git (`automaton-sessaoN.bundle`) na pasta do projeto.
 2. No painel da loja (exige a senha do painel), o botão **Aplicar atualização** faz o pull, roda os testes e volta sozinho se algo falhar; o resultado fica em `data\atualizacao.log`.
+
+## Registro de 08/11/2026
+
+| Hora | Fato |
+|---|---|
+| ~21:50 | Vitrine fora do ar (Error 1033): `cloudflared` e credenciais ausentes no PC |
+| ~22:00 | `cloudflared` reinstalado, PC autorizado no Cloudflare, credencial do túnel recriada, loja de volta (HTTP 200) |
+| ~22:30 | Atualização 27 aplicada no PC (HN Replay a R$ 1.490); 85 testes passaram; loja reiniciada |
+| 22:35 | Pacote 28 (reinício que fecha loja + túnel) enviado ao PC; aplicação pendente |
+
+Pendências: aplicar o pacote 28; executar `instalar-servico`; decidir sobre o repouso do PC; compra de teste real do HN Replay (a entrega do `.zip` foi validada só nos testes automáticos).
