@@ -110,3 +110,23 @@ A Vitrine é uma **plataforma multivenda**, e não um único serviço. **Documen
 - [scripts/stress-vitrine-staging.mjs](scripts/stress-vitrine-staging.mjs) — carga GET **somente em réplica local, nunca na porta 3000, Stripe LIVE ou túnel público**.
 
 **Estado desta implementação:** documentação no GitHub; **nenhuma alteração automática aplicada ao servidor que roda no PC**. A inconsistência "48 horas + 1 revisão" nos termos universais permanece até a atualização da loja ser implantada e verificada. Não substituir histórico de pedidos/contratos nem prometer que produto está corrigido antes de testar.
+
+
+## Diretoria Vitrine e agentes especialistas — status 09/11/2026
+
+A Vitrine terá um **orquestrador operacional** responsável por distribuir e cobrar tarefas entre o vendedor, captador de leads, agentes de teste e especialistas temporários. **Isso está preparado em outro repositório PRIVADO, não foi implantado ainda no processo Node.js deste PC.**
+
+- Repositório privado: https://github.com/Helberrrr/automaton-mvp
+- Política/organograma: \`agents/orquestrador_vitrine/SYSTEM.md\`
+- Código do motor: \`src/agent/orquestrador-vitrine.js\`
+- Captação B2B: \`src/agent/captador-leads.js\`
+- QA de vendedor: \`src/agent/vendedor-qa-agents.js\`
+- Recuperação: \`docs/RUNBOOK_ORQUESTRADOR_VITRINE.md\`
+- Estado, evidências e pendências: \`docs/DIARIO_ORQUESTRADOR.md\` e \`docs/RELATORIO_QA_2026-11-09.md\`
+- Habilidades: \`skills/vitrine/\` no repositório privado.
+
+Existe uma rotina do ChatGPT **Diretoria Vitrine Autônoma**, verificação a cada 6 horas (ID \`6af13d277a2c8191b09335f1ca72d3c7\`), além das rotinas de vendas e pós-venda. Elas monitoram os conectores disponíveis e podem preparar mudanças/documentos, **mas não alteram automaticamente o servidor deste PC, o Stripe LIVE ou o túnel de produção**.
+
+Os resultados 26/26 + 30/30 de cenários e 10.000 interações são testes LÓGICOS isolados, não prova de 100 clientes reais simultâneos. Para validação HTTP/Stripe/Tunnel em staging seguir [TESTES_STAGING_VITRINE.md](TESTES_STAGING_VITRINE.md); nunca disparar carga contra a loja pública. A integração entre o motor de direção e o servidor real depende de patch versionado, testes Node/Stripe TEST, backup, rollback e validação técnica.
+
+**Regra econômica:** publicidade e publicações pagas permanecem em R$ 0 até 20 vendas liquidadas e não estornadas comprovadas em provedor autenticado. Mesmo depois, novo gasto exige autorização específica. 
