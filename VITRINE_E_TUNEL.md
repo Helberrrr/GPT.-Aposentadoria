@@ -59,7 +59,7 @@ cliente → vitrineautonoma.com.br → Cloudflare → túnel "automaton" → PC 
 
 | Produto | Preço | Entrega | Situação |
 |---|---|---|---|
-| Pacote de conteúdo (produto padrão) | a partir de R$ 49 (completo R$ 149) | Gerado por IA e validado, em até 48 h | No ar |
+| Pacote de conteúdo (produto padrão) | a partir de R$ 49 (pacote inicial; o preço do pacote completo é definido pelo experimento ativo) | Gerado por IA e validado, em até 48 h | No ar |
 | **HN Replay — código-fonte do site** | R$ 1.490 | **Automática**: o `.zip` do código aparece no link do pedido logo após o pagamento. Sem IA e sem custo | Código pronto e testado (atualização 27). Entra no ar ao aplicar a atualização no painel |
 | Canção da Família | R$ 39 | Letra por IA + música | Pronta no código; só publica com a chave do gerador de música, que ainda não existe |
 
