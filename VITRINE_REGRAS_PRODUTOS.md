@@ -7,7 +7,7 @@
 **Demonstração:** https://helberrrr.github.io/GPT.-Aposentadoria/  
 **Código em produção:** PC do titular, Node.js/SQLite e Cloudflare Tunnel, conforme [VITRINE_E_TUNEL.md](VITRINE_E_TUNEL.md). Este repositório público guarda **documentos**, não o servidor privado nem suas credenciais.
 
-## 1. Decisão de arquitetura: UM marketplace/catálogo, VÁRIOS produtos independentes
+## 1. Decisão de arquitetura: UMA plataforma multiproduto, VÁRIOS produtos independentes
 
 A Vitrine Autônoma é a **plataforma de checkout, pagamento, pedidos, entrega e suporte** para vários produtos distintos. Não é um produto único com entregas intercambiáveis. Cada item é uma **oferta contratual própria**, sujeita a seus próprios requisitos de entrada, preço, SLA, licença, tipo de entrega e possibilidade de revisão.
 
