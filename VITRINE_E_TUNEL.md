@@ -100,3 +100,13 @@ O `servico.js` já aplica a regra: a cada 5 minutos confere `https://vitrineauto
 | 22:35 | Pacote 28 (reinício que fecha loja + túnel) enviado ao PC; aplicação pendente |
 
 Pendências: aplicar o pacote 28; executar `instalar-servico`; decidir sobre o repouso do PC; compra de teste real do HN Replay (a entrega do `.zip` foi validada só nos testes automáticos).
+
+
+## Implementar no PC — regras específicas por produto e teste seguro
+
+A Vitrine é uma **plataforma multivenda**, e não um único serviço. **Documentação para alterar o servidor real:**
+- [VITRINE_REGRAS_PRODUTOS.md](VITRINE_REGRAS_PRODUTOS.md) — regra de cada produto, correção de /termos, /reembolso, /privacidade, checkout e entrega.
+- [TESTES_STAGING_VITRINE.md](TESTES_STAGING_VITRINE.md) — matriz de testes, Stripe TEST, Cloudflare Tunnel de homologação e 100 usuários virtuais.
+- [scripts/stress-vitrine-staging.mjs](scripts/stress-vitrine-staging.mjs) — carga GET **somente em réplica local, nunca na porta 3000, Stripe LIVE ou túnel público**.
+
+**Estado desta implementação:** documentação no GitHub; **nenhuma alteração automática aplicada ao servidor que roda no PC**. A inconsistência "48 horas + 1 revisão" nos termos universais permanece até a atualização da loja ser implantada e verificada. Não substituir histórico de pedidos/contratos nem prometer que produto está corrigido antes de testar.
