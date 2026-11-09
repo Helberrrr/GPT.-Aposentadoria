@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="HN Replay — demonstração de curadoria de vídeos recomendados ao longo dos anos pela comunidade Hacker News.">
+<title>HN Replay • Demonstração</title>
+<style>
+:root{color-scheme:dark;--bg:#090b10;--panel:#151820;--line:#29303b;--muted:#9ca6b7;--orange:#ff742e;--white:#f7f8fa}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--white);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+a{color:inherit;text-decoration:none}a:hover{color:#ffae7d}button,input{font:inherit}
+header{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100vw - 1220px)/2));border-bottom:1px solid var(--line);position:sticky;top:0;z-index:9;background:#0c0f15f0;backdrop-filter:blur(12px)}
+.logo{font-size:22px;font-weight:900;letter-spacing:-.7px;white-space:nowrap}.logo b{display:inline-grid;place-items:center;color:#131313;background:var(--orange);border-radius:9px;width:34px;height:30px;margin-right:8px;font-size:19px}.logo em{font-style:normal;color:var(--orange)}.headnote{color:var(--muted);font-size:13px}.shell{max-width:1220px;margin:auto;padding:32px 20px 70px}
+.hero{border:1px solid #4b2c20;border-radius:25px;background:radial-gradient(ellipse at 80% 25%,#783917 0%,transparent 42%),linear-gradient(110deg,#1d1b22,#12151b 80%);padding:clamp(30px,6vw,70px);min-height:330px;display:flex;justify-content:space-between;align-items:center;gap:30px}
+.eyebrow{color:#ffad7a;font-size:12px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}
+h1{font-size:clamp(35px,5.5vw,68px);line-height:1.06;letter-spacing:-2.8px;max-width:740px;margin:15px 0}h1 span{color:var(--orange)}
+.hero p{color:#c4cbd7;max-width:570px;font-size:16px}.cta{display:inline-block;background:var(--orange);color:#1b120b;font-weight:900;padding:12px 20px;border-radius:11px;margin-top:16px}
+.hero-count{border-radius:20px;padding:24px;min-width:146px;text-align:center;background:#0e1018a6;border:1px solid #81502e}.hero-count strong{display:block;color:#ff914f;font-size:55px;line-height:1}.hero-count small{color:#cfd0d8}
+.section-top{display:flex;justify-content:space-between;gap:16px;align-items:end;margin:50px 0 20px}
+h2{font-size:29px;letter-spacing:-.7px;margin:0 0 5px}.subtitle{color:var(--muted);margin:0}.pill{border:1px solid var(--line);border-radius:100px;padding:7px 13px;color:#cbd2dd;font-size:12px;white-space:nowrap}
+.controls{display:flex;gap:12px;margin:24px 0}.controls input{width:100%;background:#161923;border:1px solid #3b4250;border-radius:12px;color:#fff;padding:13px 16px;outline:none}.controls input:focus{border-color:var(--orange)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.card{min-width:0}.thumb{aspect-ratio:16/9;position:relative;border-radius:15px;overflow:hidden;border:1px solid #303746;background:#222;cursor:pointer;display:block;width:100%;padding:0;color:#fff;text-align:initial}.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}.thumb:hover img{transform:scale(1.05)}.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#000c;border:1px solid #ffffff55;border-radius:100px;padding:9px 15px;font-size:24px}.tag{display:inline-block;color:#ffa76f;font-size:12px;font-weight:700;margin-top:12px}.card h3{font-size:17px;line-height:1.3;margin:4px 0 5px}.channel{color:#b5bdc9;font-size:13px}.evidence{margin-top:8px;color:#ffaf84;font-size:13px}.evidence:hover{text-decoration:underline}
+.note{margin-top:48px;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:25px 30px;color:#c1cad7}.note strong{color:#fff}
+footer{border-top:1px solid var(--line);margin-top:48px;padding-top:24px;color:#9ba5b6;font-size:13px}
+.modal{position:fixed;inset:0;background:#050505f0;z-index:99;display:none;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.player-box{max-width:1000px;width:100%}.player{aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden}.player iframe{width:100%;height:100%;border:0}.close{float:right;cursor:pointer;border:0;background:#242a34;color:#fff;font-size:20px;border-radius:8px;padding:5px 12px;margin-bottom:9px}
+@media(max-width:880px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-count{display:none}}@media(max-width:600px){header{height:62px}.headnote{display:none}.shell{padding:18px 14px}.hero{border-radius:18px;padding:25px 20px;min-height:290px}h1{letter-spacing:-1.7px}.section-top{display:block}.pill{display:inline-block;margin-top:10px}.cards{grid-template-columns:1fr}.controls{margin-top:17px}}
+</style>
+</head>
+<body>
+<header><a href="./" class="logo"><b>▶</b>HN <em>REPLAY</em></a><span class="headnote">DEMONSTRAÇÃO PÚBLICA · MVP</span></header>
+<main class="shell">
+<section class="hero">
+<div><div class="eyebrow">Sinais humanos, não algoritmo de engajamento</div><h1>Menos ruído.<br><span>Mais descobertas.</span></h1><p>Vídeos que voltaram a ser recomendados pela comunidade Hacker News ao longo do tempo. Uma amostra do portal HN Replay.</p><a href="#catalogo" class="cta">Explorar vídeos →</a></div>
+<div class="hero-count"><strong>05</strong><small>vídeos nesta<br>demonstração</small></div>
+</section>
+<section id="catalogo">
+<div class="section-top"><div><div class="eyebrow">Curadoria verificável</div><h2>Uma amostra da coleção</h2><p class="subtitle">Assista e confira a origem de cada indicação.</p></div><div class="pill">Protótipo · sem audiência ou receita comprovada</div></div>
+<div class="controls"><input id="search" type="search" placeholder="Buscar por título, canal ou assunto..." aria-label="Buscar vídeos"></div>
+<div class="cards" id="cards"></div>
+</section>
+<section class="note"><strong>Sobre o projeto à venda</strong><p>Esta página apresenta somente cinco vídeos e uma interface de demonstração. O HN Replay é um protótipo estático criado em novembro de 2026. O pacote comercial separado inclui o projeto mais completo, catálogo inicial de 35 vídeos, documentação e importador de catálogo. Não inclui domínio, hospedagem, audiência, receita, direitos sobre vídeos ou exclusividade de dados de terceiros.</p><p>Este projeto independente não possui afiliação com YouTube, Hacker News ou HackerTube. Vídeos e miniaturas pertencem aos seus respectivos titulares. Fontes e atribuição de dados: <a href="https://hackertube.me/" target="_blank" rel="noopener noreferrer" style="color:#ffad7a;text-decoration:underline">HackerTube</a>.</p></section>
+<footer>HN Replay · Demonstração pública para avaliação de um projeto de software. Reprodução via YouTube.</footer>
+</main>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Reprodutor de vídeo"><div class="player-box"><button class="close" id="close" aria-label="Fechar">×</button><div class="player" id="player"></div></div></div>
+<script>
+(function(){
+"use strict";
+var items=[
+{id:"fNk_zzaMoSs",title:"Vectors | Chapter 1, Essence of linear algebra",channel:"3Blue1Brown",category:"Matemática"},
+{id:"FITJMJjASUs",title:"Y Not? Adventures in Functional Programming",channel:"Confreaks",category:"Programação"},
+{id:"NGFhc8R_uO4",title:"Indistinguishable From Magic: Manufacturing Modern Computer Chips",channel:"Andor Gafotas",category:"Hardware"},
+{id:"Unzc731iCUY",title:"How to Speak",channel:"MIT OpenCourseWare",category:"Aprendizado"},
+{id:"VMj-3S1tku0",title:"The spelled-out intro to neural networks and backpropagation: building micrograd",channel:"Andrej Karpathy",category:"IA e dados"}
+];
+var cards=document.getElementById("cards"),search=document.getElementById("search"),modal=document.getElementById("modal"),player=document.getElementById("player");
+function render(){cards.textContent="";var q=search.value.toLocaleLowerCase("pt-BR");var filtered=items.filter(function(x){return (x.title+" "+x.channel+" "+x.category).toLocaleLowerCase("pt-BR").includes(q)});
+if(!filtered.length){var p=document.createElement("p");p.textContent="Nenhum vídeo encontrado.";cards.appendChild(p);return;}
+filtered.forEach(function(v){var div=document.createElement("article");div.className="card";var btn=document.createElement("button");btn.className="thumb";btn.type="button";btn.setAttribute("aria-label","Assistir "+v.title);var img=document.createElement("img");img.src="https://i.ytimg.com/vi/"+encodeURIComponent(v.id)+"/hqdefault.jpg";img.alt="Miniatura de "+v.title;img.loading="lazy";var play=document.createElement("span");play.className="play";play.textContent="▶";btn.append(img,play);btn.addEventListener("click",function(){show(v.id)});
+var tag=document.createElement("div");tag.className="tag";tag.textContent=v.category;var h=document.createElement("h3");h.textContent=v.title;var ch=document.createElement("div");ch.className="channel";ch.textContent=v.channel;var ev=document.createElement("a");ev.className="evidence";ev.href="https://hackertube.me/watch/"+encodeURIComponent(v.id)+"/";ev.target="_blank";ev.rel="noopener noreferrer";ev.textContent="Conferir indicação na fonte ↗";div.append(btn,tag,h,ch,ev);cards.appendChild(div)})}
+function show(id){player.textContent="";var iframe=document.createElement("iframe");iframe.src="https://www.youtube-nocookie.com/embed/"+encodeURIComponent(id)+"?autoplay=1";iframe.title="YouTube video player";iframe.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";iframe.allowFullscreen=true;player.appendChild(iframe);modal.classList.add("open")}
+function close(){modal.classList.remove("open");player.textContent=""}
+search.addEventListener("input",render);document.getElementById("close").addEventListener("click",close);modal.addEventListener("click",function(e){if(e.target===modal)close()});window.addEventListener("keydown",function(e){if(e.key==="Escape")close()});render();
+})();
+</script>
+</body></html>
